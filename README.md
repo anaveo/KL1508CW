@@ -52,7 +52,7 @@ const uint8_t displayPins[5] = {18, 19, 21, 22, 23};
 KL1508CW display(displayPins);
 
 void setup() {
-  display.displayNumber(123);  // Show number on startup
+  display.displayNumber(123, true);  // Show number on startup with percent sign
 }
 
 void loop() {
@@ -76,7 +76,7 @@ uint16_t currentValue = 1;
 unsigned long lastUpdate = 0;
 
 void setup() {
-  display.displayNumber(currentValue);
+  display.displayNumber(currentValue, true);
 }
 
 void loop() {
@@ -85,7 +85,7 @@ void loop() {
   if (millis() - lastUpdate > 100) {
     lastUpdate = millis();
     currentValue = (currentValue % 199) + 1;
-    display.displayNumber(currentValue);
+    display.displayNumber(currentValue, true);
   }
 }
 ```

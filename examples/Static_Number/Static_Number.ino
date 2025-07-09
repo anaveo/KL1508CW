@@ -4,7 +4,7 @@ const uint8_t displayPins[5] = {18, 19, 21, 22, 23}; // Change these to match yo
 KL1508CW display(displayPins);
 
 void setup() {
-  display.displayNumber(123);  // Show initial number
+  display.displayNumber(123, true);  // Show initial number with percent
 }
 
 void loop() {

@@ -1,8 +1,12 @@
 #include "KL1508CW.h"
 
 // ----- Segment lookup tables
-byte dig_1_p_vals[2][4] = {{0b00010100, 0b00010100, 0b00010100, 0b00010100}, // 0 (empty)
-                          {0b00110011, 0b00010100, 0b00110011, 0b00010100}, // 1
+byte percent_vals[2][4] = {{0b00000000, 0b00000000, 0b00000000, 0b00000000}, // empty
+                          {0b00010100, 0b00010100, 0b00010100, 0b00010100}, // %
+                          };
+                          
+byte dig_1_vals[2][4] = {{0b00000000, 0b00000000, 0b00000000, 0b00000000}, // 0 (empty)
+                          {0b00110011, 0b00110011, 0b00110011, 0b00110011}, // 1
                           };
 
 byte dig_2_vals[10][4] = {{0b11100001, 0b11010010, 0b11100001, 0b11010010}, // 0
@@ -43,14 +47,15 @@ void KL1508CW::extractDigits(uint8_t number, uint8_t &hundreds, uint8_t &tens, u
   ones = number % 10;
 }
 
-void KL1508CW::displayNumber(uint8_t number) {
+void KL1508CW::displayNumber(uint8_t number, bool percent) {
   uint8_t h, t, o;
   extractDigits(number, h, t, o);
 
   for (int i = 0; i < 4; i++) {
-    _segments[0][i] = dig_1_p_vals[h][i];
+    _segments[0][i] = dig_1_vals[h][i];
     _segments[1][i] = dig_2_vals[t][i];
     _segments[2][i] = dig_3_vals[o][i];
+    _segments[3][i] = percent_vals[percent][i];
   }
 }
 
@@ -78,7 +83,7 @@ void KL1508CW::tick() {
 
   if (_phase >= 4) {
     _phase = 0;
-    digit = (digit + 1) % 3;
+    digit = (digit + 1) % 4;
   }
 
   delayMicroseconds(500);  // Tune this to reduce flicker

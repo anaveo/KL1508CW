@@ -8,7 +8,7 @@ unsigned long lastUpdate = 0;
 const unsigned long updateInterval = 250; // Change number every 100ms
 
 void setup() {
-  display.displayNumber(currentValue);
+  display.displayNumber(currentValue, true);
 }
 
 void loop() {
@@ -23,6 +23,6 @@ void loop() {
     currentValue++;
     if (currentValue > 199) currentValue = 1;
 
-    display.displayNumber(currentValue);
+    display.displayNumber(currentValue, true);
   }
 }
